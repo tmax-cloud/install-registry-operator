@@ -158,15 +158,15 @@ TODO
 
 ## registry-operator 설치 가이드
 
-1. [Step 0. 설치 파일 준비](#Step-0.-설치-파일-준비)
+1. [Step 0. 설치 파일 준비](#Step-0-설치-파일-준비)
 
-1. [Step 1. 인증서 생성](#Step-1.-인증서-생성)
+1. [Step 1. 인증서 생성](#Step-1-인증서-생성)
 
-1. [Step 2. config 설정](#Step-2.-config-설정)
+1. [Step 2. config 설정](#Step-2-config-설정)
 
-1. [Step 3. install script 실행](Step-3.-install-script-실행)
+1. [Step 3. install script 실행](#Step-3-install-script-실행)
 
-1. [Step 4. 신뢰할 수 있는 인증서로 등록](#Step-4.-신뢰할-수-있는-인증서로-등록)
+1. [Step 4. 신뢰할 수 있는 인증서로 등록](#Step-4-신뢰할-수-있는-인증서로-등록)
 
 ### Step 0. 설치 파일 준비
 
@@ -246,7 +246,7 @@ ${REG_OP_HOME}/config/manager/manager_config.yaml 파일에 환경변수를 설�
           cd ${REG_OP_HOME}
           scp ./config/pki/ca.crt ${REMOTE}:/usr/local/share/ca-certificates/registry_ca.crt
           ssh ${REMOTE}
-        update-ca-certificates
+          update-ca-certificates
         ```
 
 1. 컨테이너 런타임을 재기동하여 갱신된 CA 목록을 적용한다.
