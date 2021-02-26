@@ -56,7 +56,9 @@
 
 ## clair 설치 가이드
 
-1. registry-operator 설치 디렉터리 이동 후 deploy 스크립트 실행
+1. 아래 registry-operator 폐쇄망 구축 가이드 수행
+   
+2. registry-operator 홈 디렉터리 내 Clair deploy 스크립트 실행
 
     ```bash
     cd ${REG_OP_HOME}/config/manager/clair 
