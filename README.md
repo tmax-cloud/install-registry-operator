@@ -33,16 +33,6 @@
 
   * [설치 가이드](https://github.com/tmax-cloud/install_clair)
 
-## clair 삭제 가이드
-
-* 아래의 명령어를 실행
-
-    ```bash
-    cd ${REG_OP_HOME}
-    chmod 755 ./uninstall.sh
-    ./uninstall -s
-    ```
-
 ## registry-operator 폐쇄망 구축 가이드
 
 1. 폐쇄망 Image Registry에서 사용할 Image 및 설치 파일 준비
