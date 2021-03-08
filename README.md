@@ -263,7 +263,7 @@ ${REG_OP_HOME}/config/manager/manager_config.yaml 파일에 환경변수를 설�
     ```bash
     cd ${REG_OP_HOME}
     chmod 755 ./uninstall.sh
-    ./uninstall -a
+    ./uninstall.sh -a
     ```
 
 * registry-operator만 삭제를 원하는 경우, 아래의 명령어를 실행
@@ -271,7 +271,7 @@ ${REG_OP_HOME}/config/manager/manager_config.yaml 파일에 환경변수를 설�
     ```bash
     cd ${REG_OP_HOME}
     chmod 755 ./uninstall.sh
-    ./uninstall -m
+    ./uninstall.sh -m
     ```
 
 * crd 리소스만 삭제를 원하는 경우, 아래의 명령어를 실행
@@ -279,5 +279,5 @@ ${REG_OP_HOME}/config/manager/manager_config.yaml 파일에 환경변수를 설�
     ```bash
     cd ${REG_OP_HOME}
     chmod 755 ./uninstall.sh
-    ./uninstall -c
+    ./uninstall.sh -c
     ```
