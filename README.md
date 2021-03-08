@@ -29,6 +29,7 @@
 
     * [설치 가이드](https://github.com/tmax-cloud/hypercloud-install-guide/tree/4.1/EFK#step-1-elasticsearch-%EC%84%A4%EC%B9%98)
 
+<<<<<<< Updated upstream
 ## clair 폐쇄망 구축 가이드
 
 TODO
@@ -38,14 +39,12 @@ TODO
 TODO
 
 ## clair 삭제 가이드
+=======
+## clair 설치 가이드
 
-* 아래의 명령어를 실행
+  * [설치 가이드](https://github.com/tmax-cloud/install_clair)
+>>>>>>> Stashed changes
 
-    ```bash
-    cd ${REG_OP_HOME}
-    chmod 755 ./uninstall.sh
-    ./uninstall -s
-    ```
 
 ## registry-operator 폐쇄망 구축 가이드
 
