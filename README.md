@@ -29,41 +29,9 @@
 
     * [설치 가이드](https://github.com/tmax-cloud/hypercloud-install-guide/tree/4.1/EFK#step-1-elasticsearch-%EC%84%A4%EC%B9%98)
 
-## clair 폐쇄망 구축 가이드
-
-1. 도커 이미지 파일시스템에 저장
-
-    ```bash
-    SCANNER=quay.io/coreos/clair
-    sudo docker pull ${SCANNER}
-    sudo docker save ${SCANNER} > ${SCANNER}.tar
-    ```
-
-2. 저장한 이미지 파일을 설치할 폐쇄망 환경으로 복사
-
-3. 폐쇄망 Registry 서버에 이미지를 푸시
-
-    ```bash
-    REGISTRY={REGISTRY}   # ex: REGISTRY=192.168.6.100:5000
-    SCANNER=quay.io/coreos/clair
-    
-    sudo docker load < ${SCANNER}.tar
-    sudo docker tag ${SCANNER} ${REGISTRY}/${SCANNER}
-    sudo docker push ${REGISTRY}/${SCANNER}
-    ```
-
-4. 아래 clair 설치 가이드에 따라 Clair 서버 배치
-
 ## clair 설치 가이드
 
-1. 아래 registry-operator 폐쇄망 구축 가이드 수행
-   
-2. registry-operator 홈 디렉터리 내 Clair deploy 스크립트 실행
-
-    ```bash
-    cd ${REG_OP_HOME}/config/manager/clair 
-    make dev
-    ```
+  * [설치 가이드](https://github.com/tmax-cloud/install_clair)
 
 ## clair 삭제 가이드
 
