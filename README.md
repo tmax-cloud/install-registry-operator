@@ -41,8 +41,8 @@
 
       ```bash
         mkdir -p ~/registry-operator-install
-        REG_OP_HOME=~/registry-operator-install
-        REG_OP_VERSION=v0.2.2
+        INSTALL_HOME=~/registry-operator-install
+        REG_OP_VERSION=v0.2.3
         cd ${INSTALL_HOME}
       ```
 
@@ -89,8 +89,8 @@
 
       ```bash
         mkdir -p ~/registry-operator-install
-        REG_OP_HOME=~/registry-operator-install
-        REG_OP_VERSION=v0.2.2
+        INSTALL_HOME=~/registry-operator-install
+        REG_OP_VERSION=v0.2.3
         REGISTRY={REGISTRY}   # ex: REGISTRY=192.168.6.100:5000
         cd ${INSTALL_HOME}
       ```
@@ -159,7 +159,7 @@
 폐쇄망 구축이 아닌 경우 아래의 명령어를 실행하여 설치 파일을 Github Repository로부터 받아 온다.
 
 ```bash
-  REG_OP_VERSION=v0.2.2
+  REG_OP_VERSION=v0.2.3
   REG_OP_DIR=registry-operator-${REG_OP_VERSION}
   mkdir ${REG_OP_DIR}
   wget -c https://github.com/tmax-cloud/registry-operator/archive/${REG_OP_VERSION}.tar.gz -O - |tar -xz -C ${REG_OP_DIR} --strip-components=1
@@ -171,7 +171,14 @@
 
 * Root CA가 있는 경우
 
+    `/etc/kubernetes/pki/` 디렉토리에 저장되어 있는 `hypercloud-root-ca.crt`과 `hypercloud-root-ca.key` 파일이 있으면 이 인증서를 Root CA 인증서로 사용하면 된다.
+
     Root CA를 인증서 디렉토리(./config/pki/)로 옮긴다. (단, 인증서의 이름을 `ca.crt`와 `ca.key`로 해야한다.)
+
+    ```bash
+      cp /etc/kubernetes/pki/hypercloud-root-ca.crt ./config/pki/ca.crt
+      cp /etc/kubernetes/pki/hypercloud-root-ca.key ./config/pki/ca.key
+    ```
 
 * Hyperauth 인증서를 추가로 신뢰해야 하는 경우(Root CA와 다른 인증서로 Hyperauth를 설치한 경우)
 
