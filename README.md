@@ -40,45 +40,45 @@
     * 작업 디렉토리 생성 및 환경 설정
 
       ```bash
-        mkdir -p ~/registry-operator-install
-        INSTALL_HOME=~/registry-operator-install
-        REG_OP_VERSION=v0.2.3
-        cd ${INSTALL_HOME}
+      mkdir -p ~/registry-operator-install
+      INSTALL_HOME=~/registry-operator-install
+      REG_OP_VERSION=v0.2.3
+      cd ${INSTALL_HOME}
       ```
 
     * Image 저장
 
       ```bash
-        IMG=registry
-        VER=2.7.1
-        sudo docker pull ${IMG}:${VER}
-        sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
+      IMG=registry
+      VER=2.7.1
+      sudo docker pull ${IMG}:${VER}
+      sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
 
-        IMG=tmaxcloudck/notary_server
-        VER=0.6.2-rc1
-        sudo docker pull ${IMG}:${VER}
-        sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
+      IMG=tmaxcloudck/notary_server
+      VER=0.6.2-rc1
+      sudo docker pull ${IMG}:${VER}
+      sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
 
-        IMG=tmaxcloudck/notary_signer
-        VER=0.6.2-rc1
-        sudo docker pull ${IMG}:${VER}
-        sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
+      IMG=tmaxcloudck/notary_signer
+      VER=0.6.2-rc1
+      sudo docker pull ${IMG}:${VER}
+      sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
 
-        IMG=tmaxcloudck/notary_mysql
-        VER=0.6.2-rc1
-        sudo docker pull ${IMG}:${VER}
-        sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
-        
-        IMG=tmaxcloudck/registry-operator
-        VER=${REG_OP_VERSION}
-        sudo docker pull ${IMG}:${VER}
-        sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
+      IMG=tmaxcloudck/notary_mysql
+      VER=0.6.2-rc1
+      sudo docker pull ${IMG}:${VER}
+      sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
+      
+      IMG=tmaxcloudck/registry-operator
+      VER=${REG_OP_VERSION}
+      sudo docker pull ${IMG}:${VER}
+      sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
       ```
 
     * 설치 파일 저장
 
       ```bash
-        wget -O registry-operator.tar.gz https://github.com/tmax-cloud/registry-operator/archive/${REG_OP_VERSION}.tar.gz
+      wget -O registry-operator.tar.gz https://github.com/tmax-cloud/registry-operator/archive/${REG_OP_VERSION}.tar.gz
       ```
 
 1. 폐쇄망 Registry에 필요한 Image Push 및 설치 파일 압축 해제 및 Image 주소 수정
@@ -88,58 +88,58 @@
     * 아래의 명령어를 실행하여 폐쇄망 Image Registry 주소등 환경설정을 한다.
 
       ```bash
-        mkdir -p ~/registry-operator-install
-        INSTALL_HOME=~/registry-operator-install
-        REG_OP_VERSION=v0.2.3
-        REGISTRY={REGISTRY}   # ex: REGISTRY=192.168.6.100:5000
-        cd ${INSTALL_HOME}
+      mkdir -p ~/registry-operator-install
+      INSTALL_HOME=~/registry-operator-install
+      REG_OP_VERSION=v0.2.3
+      REGISTRY={REGISTRY}   # ex: REGISTRY=192.168.6.100:5000
+      cd ${INSTALL_HOME}
       ```
 
     * 아래의 명령어를 실행하여 Image를 Load하고 Push한다.
 
       ```bash
-        cd ${INSTALL_HOME}
-        IMG=registry
-        VER=2.7.1
-        sudo docker load < ${IMG}_${VER}.tar
-        sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
-        sudo docker push ${REGISTRY}/${IMG}:${VER}
-        
-        IMG=tmaxcloudck/notary_server
-        VER=0.6.2-rc1
-        sudo docker load < ${IMG}_${VER}.tar
-        sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
-        sudo docker push ${REGISTRY}/${IMG}:${VER}
-        
-        IMG=tmaxcloudck/notary_signer
-        VER=0.6.2-rc1
-        sudo docker load < ${IMG}_${VER}.tar
-        sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
-        sudo docker push ${REGISTRY}/${IMG}:${VER}
-        
-        IMG=tmaxcloudck/notary_mysql
-        VER=0.6.2-rc1
-        sudo docker load < ${IMG}_${VER}.tar
-        sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
-        sudo docker push ${REGISTRY}/${IMG}:${VER}
+      cd ${INSTALL_HOME}
+      IMG=registry
+      VER=2.7.1
+      sudo docker load < ${IMG}_${VER}.tar
+      sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
+      sudo docker push ${REGISTRY}/${IMG}:${VER}
+      
+      IMG=tmaxcloudck/notary_server
+      VER=0.6.2-rc1
+      sudo docker load < ${IMG}_${VER}.tar
+      sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
+      sudo docker push ${REGISTRY}/${IMG}:${VER}
+      
+      IMG=tmaxcloudck/notary_signer
+      VER=0.6.2-rc1
+      sudo docker load < ${IMG}_${VER}.tar
+      sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
+      sudo docker push ${REGISTRY}/${IMG}:${VER}
+      
+      IMG=tmaxcloudck/notary_mysql
+      VER=0.6.2-rc1
+      sudo docker load < ${IMG}_${VER}.tar
+      sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
+      sudo docker push ${REGISTRY}/${IMG}:${VER}
 
-        IMG=tmaxcloudck/registry-operator
-        VER=${REG_OP_VERSION}
-        sudo docker load < ${IMG}_${VER}.tar
-        sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
-        sudo docker push ${REGISTRY}/${IMG}:${VER}
+      IMG=tmaxcloudck/registry-operator
+      VER=${REG_OP_VERSION}
+      sudo docker load < ${IMG}_${VER}.tar
+      sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
+      sudo docker push ${REGISTRY}/${IMG}:${VER}
       ```
 
       * 아래의 명령어를 실행하여 설치 파일 압축 해제 및 Image 주소 수정
 
         ```bash
-          cd ${INSTALL_HOME}
-          mkdir registry-operator-${REG_OP_VERSION}
-          tar -xzf registry-operator.tar.gz -C registry-operator-${REG_OP_VERSION} --strip-components=1
-          REG_OP_HOME=${INSTALL_HOME}/registry-operator-${REG_OP_VERSION}
+        cd ${INSTALL_HOME}
+        mkdir registry-operator-${REG_OP_VERSION}
+        tar -xzf registry-operator.tar.gz -C registry-operator-${REG_OP_VERSION} --strip-components=1
+        REG_OP_HOME=${INSTALL_HOME}/registry-operator-${REG_OP_VERSION}
 
-          IMG=tmaxcloudck\\/registry-operator:${REG_OP_VERSION}
-          sed -i 's/'${IMG}'/'${REGISTRY}'\/'${IMG}'/g' ${REG_OP_HOME}/config/manager/manager.yaml
+        IMG=tmaxcloudck\\/registry-operator:${REG_OP_VERSION}
+        sed -i 's/'${IMG}'/'${REGISTRY}'\/'${IMG}'/g' ${REG_OP_HOME}/config/manager/manager.yaml
         ```
 
 ## registry-operator 설치 가이드
@@ -159,12 +159,12 @@
 폐쇄망 구축이 아닌 경우 아래의 명령어를 실행하여 설치 파일을 Github Repository로부터 받아 온다.
 
 ```bash
-  REG_OP_VERSION=v0.2.3
-  REG_OP_DIR=registry-operator-${REG_OP_VERSION}
-  mkdir ${REG_OP_DIR}
-  wget -c https://github.com/tmax-cloud/registry-operator/archive/${REG_OP_VERSION}.tar.gz -O - |tar -xz -C ${REG_OP_DIR} --strip-components=1
-  REG_OP_HOME=$(pwd)/${REG_OP_DIR}
-  cd ${REG_OP_HOME}
+REG_OP_VERSION=v0.2.3
+REG_OP_DIR=registry-operator-${REG_OP_VERSION}
+mkdir ${REG_OP_DIR}
+wget -c https://github.com/tmax-cloud/registry-operator/archive/${REG_OP_VERSION}.tar.gz -O - |tar -xz -C ${REG_OP_DIR} --strip-components=1
+REG_OP_HOME=$(pwd)/${REG_OP_DIR}
+cd ${REG_OP_HOME}
 ```
 
 ### Step 1. 인증서 생성
@@ -176,8 +176,8 @@
     Root CA를 인증서 디렉토리(./config/pki/)로 옮긴다. (단, 인증서의 이름을 `ca.crt`와 `ca.key`로 해야한다.)
 
     ```bash
-      cp /etc/kubernetes/pki/hypercloud-root-ca.crt ./config/pki/ca.crt
-      cp /etc/kubernetes/pki/hypercloud-root-ca.key ./config/pki/ca.key
+    cp /etc/kubernetes/pki/hypercloud-root-ca.crt ./config/pki/ca.crt
+    cp /etc/kubernetes/pki/hypercloud-root-ca.key ./config/pki/ca.key
     ```
 
 * Hyperauth 인증서를 추가로 신뢰해야 하는 경우(Root CA와 다른 인증서로 Hyperauth를 설치한 경우)
@@ -187,10 +187,10 @@
 * Root CA가 없는 경우 아래의 명령어를 실행하여 인증서를 새로 생성한다.
 
     ```bash
-      cd ${REG_OP_HOME}
-      sudo chmod 755 ./config/scripts/newCertFile.sh
-      ./config/scripts/newCertFile.sh
-      cp ca.crt ca.key ./config/pki/
+    cd ${REG_OP_HOME}
+    sudo chmod 755 ./config/scripts/newCertFile.sh
+    ./config/scripts/newCertFile.sh
+    cp ca.crt ca.key ./config/pki/
     ```
 
 ### Step 2. config 설정
@@ -199,12 +199,11 @@ ${REG_OP_HOME}/config/manager/manager_config.yaml 파일에 환경변수를 설�
 
 환경변수에 대한 설명은 ${REG_OP_HOME}/docs/envs.md 를 보거나 [Github](https://github.com/tmax-cloud/registry-operator/blob/master/docs/envs.md)를 참고하여 설정한다.(Github의 경우 tag를 해당 버전으로 변경해야한다.)
 
-* Check!!
-
-  * hyperauth url 주소 설정: manager_config.yaml 파일에서 keycloak.service 설정
-  * clair url 주소 설정: manager_config.yaml 파일에서 clair.url 설정
-  * (`폐쇄망의 경우 필수`)폐쇄망 레지스트리 주소 설정: manager_config.yaml 파일에서 image.registry 설정
-  * multi cluster의 경우: manager_config.yaml 파일에서 cluster.name 설정으로 클러스터를 구분
+* 필수 설정
+  * keycloak.service
+  * (`image scan 기능 사용시 필수`) clair.url
+  * (`multi cluster의 경우 필수`) cluster.name
+  * (`폐쇄망의 경우 필수`) image.registry
 
 ### Step 3. install script 실행
 
@@ -225,21 +224,21 @@ ${REG_OP_HOME}/config/manager/manager_config.yaml 파일에 환경변수를 설�
     * 노드의 운영체제가 CentOS 7인 경우:
 
         ```bash
-          REMOTE={REMOTE}   # ssh 주소 설정: USER@IP (ex: root@192.168.6.100)
-          cd ${REG_OP_HOME}
-          scp ./config/pki/ca.crt ${REMOTE}:/etc/pki/ca-trust/source/anchors/registry_ca.crt
-          ssh ${REMOTE}
-          update-ca-trust
+        REMOTE={REMOTE}   # ssh 주소 설정: USER@IP (ex: root@192.168.6.100)
+        cd ${REG_OP_HOME}
+        scp ./config/pki/ca.crt ${REMOTE}:/etc/pki/ca-trust/source/anchors/registry_ca.crt
+        ssh ${REMOTE}
+        update-ca-trust
         ```
 
     * 노드의 운영체제가 Ubuntu 18.04인 경우:
 
         ```bash
-          REMOTE={REMOTE}   # ssh 주소 설정: USER@IP (ex: root@192.168.6.100)
-          cd ${REG_OP_HOME}
-          scp ./config/pki/ca.crt ${REMOTE}:/usr/local/share/ca-certificates/registry_ca.crt
-          ssh ${REMOTE}
-          update-ca-certificates
+        REMOTE={REMOTE}   # ssh 주소 설정: USER@IP (ex: root@192.168.6.100)
+        cd ${REG_OP_HOME}
+        scp ./config/pki/ca.crt ${REMOTE}:/usr/local/share/ca-certificates/registry_ca.crt
+        ssh ${REMOTE}
+        update-ca-certificates
         ```
 
 1. 컨테이너 런타임을 재기동하여 갱신된 CA 목록을 적용한다.
@@ -247,13 +246,13 @@ ${REG_OP_HOME}/config/manager/manager_config.yaml 파일에 환경변수를 설�
     * Container Runtime이 docker 인 경우:
 
         ```bash
-          systemctl restart docker
+        systemctl restart docker
         ```
 
     * Container Runtime이 cri-o 인 경우:
 
         ```bash
-          systemctl restart crio
+        systemctl restart crio
         ```
 
 ## registry-operator 삭제 가이드
