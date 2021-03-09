@@ -199,11 +199,13 @@ ${REG_OP_HOME}/config/manager/manager_config.yaml 파일에 환경변수를 설�
 
 환경변수에 대한 설명은 ${REG_OP_HOME}/docs/envs.md 를 보거나 [Github](https://github.com/tmax-cloud/registry-operator/blob/master/docs/envs.md)를 참고하여 설정한다.(Github의 경우 tag를 해당 버전으로 변경해야한다.)
 
-* 필수 설정
-  * keycloak.service
-  * (`image scan 기능 사용시 필수`) clair.url
-  * (`multi cluster의 경우 필수`) cluster.name
-  * (`폐쇄망의 경우 필수`) image.registry
+* Check!!
+
+  * hyperauth url 주소 설정: manager_config.yaml 파일에서 keycloak.service 설정
+  * clair url 주소 설정: manager_config.yaml 파일에서 scanning.scanner.url 설정
+  * elasticsearch url 주소 설정: manager_config.yaml 파일에서 scanning.report.url 설정
+  * (`폐쇄망의 경우 필수`)폐쇄망 레지스트리 주소 설정: manager_config.yaml 파일에서 image.registry 설정
+  * multi cluster의 경우: manager_config.yaml 파일에서 cluster.name 설정으로 클러스터를 구분
 
 ### Step 3. install script 실행
 
