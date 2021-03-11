@@ -40,7 +40,7 @@
       ```bash
       mkdir -p ~/registry-operator-install
       INSTALL_HOME=~/registry-operator-install
-      REG_OP_VERSION=v0.2.3
+      REG_OP_VERSION=v0.2.5
       cd ${INSTALL_HOME}
       ```
 
@@ -88,7 +88,7 @@
       ```bash
       mkdir -p ~/registry-operator-install
       INSTALL_HOME=~/registry-operator-install
-      REG_OP_VERSION=v0.2.3
+      REG_OP_VERSION=v0.2.5
       REGISTRY={REGISTRY}   # ex: REGISTRY=192.168.6.100:5000
       cd ${INSTALL_HOME}
       ```
@@ -159,7 +159,7 @@
 폐쇄망 구축이 아닌 경우 아래의 명령어를 실행하여 설치 파일을 Github Repository로부터 받아 온다.
 
 ```bash
-REG_OP_VERSION=v0.2.3
+REG_OP_VERSION=v0.2.5
 REG_OP_DIR=registry-operator-${REG_OP_VERSION}
 mkdir ${REG_OP_DIR}
 wget -c https://github.com/tmax-cloud/registry-operator/archive/${REG_OP_VERSION}.tar.gz -O - |tar -xz -C ${REG_OP_DIR} --strip-components=1
