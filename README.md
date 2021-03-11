@@ -16,7 +16,7 @@
 
     * [설치 가이드](https://github.com/tmax-cloud/install-hyperauth)
 
-1. Clair 설치 가이드
+1. Clair 설치
 
     * [설치 가이드](https://github.com/tmax-cloud/install_clair)
 
