@@ -195,7 +195,7 @@ cd ${REG_OP_HOME}
 
 ### Step 2. config 설정
 
-${REG_OP_HOME}/config/manager/manager_config.yaml 파일에 환경변수를 설정할 수 있다.
+`${REG_OP_HOME}/config/manager/manager_config.yaml` 파일에 환경변수를 설정할 수 있다.
 
 환경변수에 대한 설명은 ${REG_OP_HOME}/docs/envs.md 를 보거나 [Github](https://github.com/tmax-cloud/registry-operator/blob/master/docs/envs.md)를 참고하여 설정한다.(Github의 경우 tag를 해당 버전으로 변경해야한다.)
 
@@ -209,7 +209,7 @@ ${REG_OP_HOME}/config/manager/manager_config.yaml 파일에 환경변수를 설�
 
 ### Step 3. Hyperauth 계정 정보 입력
 
-${REG_OP_HOME}/config/manager/keycloak_secret.yaml 파일에서 username과 password를 Hyperauth(=Keycloak)의 admin 계정을 설정한다.
+`${REG_OP_HOME}/config/manager/keycloak_secret.yaml` 파일에서 username과 password를 Hyperauth(=Keycloak)의 admin 계정을 설정한다.
 
 기본값으로 username/password의 값이 admin/admin으로 되어 있으므로 수정이 필요한 경우 아래의 명령어로 쉽게 수정 가능
 
