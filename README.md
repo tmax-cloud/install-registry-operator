@@ -1,8 +1,6 @@
-# registry-operator 및 clair 설치 가이드
+# registry-operator 설치 가이드
 
 ## 구성 요소
-
-* clair
 
 * registry-operator
   * [Github](https://github.com/tmax-cloud/registry-operator)
@@ -18,6 +16,10 @@
 
     * [설치 가이드](https://github.com/tmax-cloud/install-hyperauth)
 
+1. Clair 설치 가이드
+
+    * [설치 가이드](https://github.com/tmax-cloud/install_clair)
+
 ## Related Add-ons
 
 1. image-validating-webhook
@@ -28,10 +30,6 @@
 1. Elastic Search
 
     * [설치 가이드](https://github.com/tmax-cloud/hypercloud-install-guide/tree/4.1/EFK#step-1-elasticsearch-%EC%84%A4%EC%B9%98)
-
-## clair 설치 가이드
-
-  * [설치 가이드](https://github.com/tmax-cloud/install_clair)
 
 ## registry-operator 폐쇄망 구축 가이드
 
@@ -150,9 +148,11 @@
 
 1. [Step 2. config 설정](#Step-2-config-설정)
 
-1. [Step 3. install script 실행](#Step-3-install-script-실행)
+1. [Step 3. Hyperauth 계정 정보 입력](#Step-3-Hyperauth-계정-정보-입력)
 
-1. [Step 4. 신뢰할 수 있는 인증서로 등록](#Step-4-신뢰할-수-있는-인증서로-등록)
+1. [Step 4. install script 실행](#Step-4-install-script-실행)
+
+1. [Step 5. 신뢰할 수 있는 인증서로 등록](#Step-5-신뢰할-수-있는-인증서로-등록)
 
 ### Step 0. 설치 파일 준비
 
@@ -207,7 +207,21 @@ ${REG_OP_HOME}/config/manager/manager_config.yaml 파일에 환경변수를 설�
   * (`폐쇄망의 경우 필수`)폐쇄망 레지스트리 주소 설정: manager_config.yaml 파일에서 image.registry 설정
   * multi cluster의 경우: manager_config.yaml 파일에서 cluster.name 설정으로 클러스터를 구분
 
-### Step 3. install script 실행
+### Step 3. Hyperauth 계정 정보 입력
+
+${REG_OP_HOME}/config/manager/keycloak_secret.yaml 파일에서 username과 password를 Hyperauth(=Keycloak)의 admin 계정을 설정한다.
+
+기본값으로 username/password의 값이 admin/admin으로 되어 있으므로 수정이 필요한 경우 아래의 명령어로 쉽게 수정 가능
+
+```bash
+USERNAME={USERNAME} # {USERNAME}에 수정할 username 입력
+PASSWORD={PASSWORD} # {PASSWORD}에 수정할 password 입력
+
+sed -i 's/username: admin/username: '${USERNAME}'/g' ${REG_OP_HOME}/config/manager/keycloak_secret.yaml
+sed -i 's/password: admin/password: '${PASSWORD}'/g' ${REG_OP_HOME}/config/manager/keycloak_secret.yaml
+```
+
+### Step 4. install script 실행
 
 * 아래의 명령어를 실행하여 registry-operator를 설치합니다.
 
@@ -217,7 +231,7 @@ ${REG_OP_HOME}/config/manager/manager_config.yaml 파일에 환경변수를 설�
     ./install.sh
     ```
 
-### Step 4. 신뢰할 수 있는 인증서로 등록
+### Step 5. 신뢰할 수 있는 인증서로 등록
 
 **Note**: 클러스터 내 모든 노드에 적용
 
@@ -242,6 +256,8 @@ ${REG_OP_HOME}/config/manager/manager_config.yaml 파일에 환경변수를 설�
         ssh ${REMOTE}
         update-ca-certificates
         ```
+
+    * (**NOTE**: ssh 접속한 상태에서 아래의 컨테이너 런타임 재기동까지 수행해준다!)
 
 1. 컨테이너 런타임을 재기동하여 갱신된 CA 목록을 적용한다.
 
