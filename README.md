@@ -4,7 +4,9 @@
 
 * registry-operator
   * [Github](https://github.com/tmax-cloud/registry-operator)
-  * [Dockerhub](https://hub.docker.com/r/tmaxcloudck/registry-operator/tags?page=1&ordering=last_updated)
+  * Dockerhub
+    * [tamxcloudck/registry-operator](https://hub.docker.com/r/tmaxcloudck/registry-operator/tags?page=1&ordering=last_updated)
+    * [tamxcloudck/registry-job-operator](https://hub.docker.com/r/tmaxcloudck/registry-job-operator/tags?page=1&ordering=last_updated)
 
 ## Prerequisites
 
@@ -52,6 +54,7 @@
       sudo docker pull ${IMG}:${VER}
       sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
 
+      mkdir tmaxcloudck
       IMG=tmaxcloudck/notary_server
       VER=0.6.2-rc1
       sudo docker pull ${IMG}:${VER}
@@ -71,6 +74,11 @@
       VER=${REG_OP_VERSION}
       sudo docker pull ${IMG}:${VER}
       sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
+      
+      IMG=tmaxcloudck/registry-job-operator
+      VER=${REG_OP_VERSION}
+      sudo docker pull ${IMG}:${VER}
+      sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
       ```
 
     * 설치 파일 저장
@@ -81,7 +89,7 @@
 
 1. 폐쇄망 Registry에 필요한 Image Push 및 설치 파일 압축 해제 및 Image 주소 수정
 
-    * 위에서 저장한 tar 압축 파일들을 모두 폐쇄망 환경의 ${INSTALL_HOME} 디렉토리로 옮긴다.
+    * `위에서 저장한 tar 압축 파일들을 ${INSTALL_HOME} 디렉토리 내용 그대로` 폐쇄망 환경의 ${INSTALL_HOME} 디렉토리로 옮긴다.
 
     * 아래의 명령어를 실행하여 폐쇄망 Image Registry 주소등 환경설정을 한다.
 
@@ -126,6 +134,12 @@
       sudo docker load < ${IMG}_${VER}.tar
       sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
       sudo docker push ${REGISTRY}/${IMG}:${VER}
+
+      IMG=tmaxcloudck/registry-job-operator
+      VER=${REG_OP_VERSION}
+      sudo docker load < ${IMG}_${VER}.tar
+      sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
+      sudo docker push ${REGISTRY}/${IMG}:${VER}
       ```
 
       * 아래의 명령어를 실행하여 설치 파일 압축 해제 및 Image 주소 수정
@@ -138,6 +152,9 @@
 
         IMG=tmaxcloudck\\/registry-operator:${REG_OP_VERSION}
         sed -i 's/'${IMG}'/'${REGISTRY}'\/'${IMG}'/g' ${REG_OP_HOME}/config/manager/manager.yaml
+        
+        IMG=tmaxcloudck\\/registry-job-operator:${REG_OP_VERSION}
+        sed -i 's/'${IMG}'/'${REGISTRY}'\/'${IMG}'/g' ${REG_OP_HOME}/config/manager/job_manager.yaml
         ```
 
 ## registry-operator 설치
