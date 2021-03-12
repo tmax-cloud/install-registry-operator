@@ -40,7 +40,7 @@
       ```bash
       mkdir -p ~/registry-operator-install
       INSTALL_HOME=~/registry-operator-install
-      REG_OP_VERSION=v0.2.5
+      REG_OP_VERSION=v0.3.0
       cd ${INSTALL_HOME}
       ```
 
@@ -88,7 +88,7 @@
       ```bash
       mkdir -p ~/registry-operator-install
       INSTALL_HOME=~/registry-operator-install
-      REG_OP_VERSION=v0.2.5
+      REG_OP_VERSION=v0.3.0
       REGISTRY={REGISTRY}   # ex: REGISTRY=192.168.6.100:5000
       cd ${INSTALL_HOME}
       ```
@@ -140,7 +140,7 @@
         sed -i 's/'${IMG}'/'${REGISTRY}'\/'${IMG}'/g' ${REG_OP_HOME}/config/manager/manager.yaml
         ```
 
-## registry-operator 설치 가이드
+## registry-operator 설치
 
 1. [Step 0. 설치 파일 준비](#Step-0-설치-파일-준비)
 
@@ -159,7 +159,7 @@
 폐쇄망 구축이 아닌 경우 아래의 명령어를 실행하여 설치 파일을 Github Repository로부터 받아 온다.
 
 ```bash
-REG_OP_VERSION=v0.2.5
+REG_OP_VERSION=v0.3.0
 REG_OP_DIR=registry-operator-${REG_OP_VERSION}
 mkdir ${REG_OP_DIR}
 wget -c https://github.com/tmax-cloud/registry-operator/archive/${REG_OP_VERSION}.tar.gz -O - |tar -xz -C ${REG_OP_DIR} --strip-components=1
