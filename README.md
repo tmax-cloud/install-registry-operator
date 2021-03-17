@@ -7,8 +7,8 @@
     * latest version source: [v0.3.1](https://github.com/tmax-cloud/registry-operator/tree/v0.3.1)
     * latest version release: [v0.3.1](https://github.com/tmax-cloud/registry-operator/releases/tag/v0.3.1)
   * Dockerhub(image)
-    * [tamxcloudck/registry-operator:v0.3.1](https://hub.docker.com/layers/tmaxcloudck/registry-operator/v0.3.1/images/sha256-2daf5abaeeee47639abe5a5ec69ab514eba79fc40e7ae33a7fea05db44415f40?context=explore)
-    * [tamxcloudck/registry-job-operator:v0.3.1](https://hub.docker.com/layers/tmaxcloudck/registry-job-operator/v0.3.1/images/sha256-94f85933b68eba80de489956ddcd767f36881f6bb9aeeae45fab74f31da9dd48?context=explore)
+    * [tamxcloudck/registry-operator:v0.3.1](https://hub.docker.com/layers/tmaxcloudck/registry-operator/v0.3.1/images/sha256-a03591a1855a2a426dd436eb17744362a54793813deabe2557e295ec13cb13d6?context=explore)
+    * [tamxcloudck/registry-job-operator:v0.3.1](https://hub.docker.com/layers/tmaxcloudck/registry-job-operator/v0.3.1/images/sha256-fe214592dad01db46af2fd744637e796c02da249d0e48f7c9cb8c6a4ba496018?context=explore)
 
 ## Prerequisites
 
