@@ -1,22 +1,24 @@
 # registry-operator 설치 가이드
 
-## 구성 요소
+## 구성 요소 및 버전
 
 * registry-operator
-  * [Github](https://github.com/tmax-cloud/registry-operator)
-  * Dockerhub
-    * [tamxcloudck/registry-operator](https://hub.docker.com/r/tmaxcloudck/registry-operator/tags?page=1&ordering=last_updated)
-    * [tamxcloudck/registry-job-operator](https://hub.docker.com/r/tmaxcloudck/registry-job-operator/tags?page=1&ordering=last_updated)
+  * Github
+    * latest version source: [v0.3.0](https://github.com/tmax-cloud/registry-operator/tree/v0.3.0)
+    * latest version release: [v0.3.0](https://github.com/tmax-cloud/registry-operator/releases/tag/v0.3.0)
+  * Dockerhub(image)
+    * [tamxcloudck/registry-operator:v0.3.0](https://hub.docker.com/layers/tmaxcloudck/registry-operator/v0.3.0/images/sha256-2daf5abaeeee47639abe5a5ec69ab514eba79fc40e7ae33a7fea05db44415f40?context=explore)
+    * [tamxcloudck/registry-job-operator:v0.3.0](https://hub.docker.com/layers/tmaxcloudck/registry-job-operator/v0.3.0/images/sha256-94f85933b68eba80de489956ddcd767f36881f6bb9aeeae45fab74f31da9dd48?context=explore)
 
 ## Prerequisites
 
 1. Nginx Ingress Controller 설치
 
-    * [설치 가이드](https://github.com/tmax-cloud/install-ingress/tree/4.1#nginx-ingress-controller-%EC%84%A4%EC%B9%98-%EA%B0%80%EC%9D%B4%EB%93%9C)
+    * [설치 가이드](https://github.com/tmax-cloud/install-ingress/tree/5.0)
 
 1. Hyperauth 설치
 
-    * [설치 가이드](https://github.com/tmax-cloud/install-hyperauth)
+    * [설치 가이드](https://github.com/tmax-cloud/install-hyperauth/tree/5.0)
 
 1. Clair 설치
 
@@ -27,7 +29,7 @@
 1. image-validating-webhook
 
     * [Github](https://github.com/tmax-cloud/image-validating-webhook)
-    * [설치 가이드](https://github.com/tmax-cloud/install-image-validating-webhook)
+    * [설치 가이드](https://github.com/tmax-cloud/install-image-validating-webhook/tree/5.0)
 
 1. Elastic Search
 
