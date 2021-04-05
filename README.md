@@ -195,9 +195,9 @@ cd ${REG_OP_HOME}
     Root CA를 인증서 디렉토리(./config/pki/)로 옮긴다. (단, 인증서의 이름을 `ca.crt`와 `ca.key`로 해야한다.)
 
     ```bash
-    cp /etc/kubernetes/pki/hypercloud-root-ca.crt ./config/pki/ca.crt
-    cp /etc/kubernetes/pki/hypercloud-root-ca.key ./config/pki/ca.key
-    sudo chmod 644 ./config/pki/ca.key
+    sudo cp /etc/kubernetes/pki/hypercloud-root-ca.crt ./config/pki/ca.crt
+    sudo cp /etc/kubernetes/pki/hypercloud-root-ca.key ./config/pki/ca.key
+    sudo chmod 644 ./config/pki/ca.crt ./config/pki/ca.key
     ```
 
 * Hyperauth 인증서를 추가로 신뢰해야 하는 경우(Root CA와 다른 인증서로 Hyperauth를 설치한 경우)
