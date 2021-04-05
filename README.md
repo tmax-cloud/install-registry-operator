@@ -22,7 +22,7 @@
 
 1. Clair 설치
 
-    * [설치 가이드](https://github.com/tmax-cloud/install_clair)
+    * [설치 가이드](https://github.com/tmax-cloud/install-clair/tree/5.0)
 
 ## Related Add-ons
 
@@ -33,7 +33,7 @@
 
 1. Elastic Search
 
-    * [설치 가이드](https://github.com/tmax-cloud/hypercloud-install-guide/tree/4.1/EFK#step-1-elasticsearch-%EC%84%A4%EC%B9%98)
+    * [설치 가이드](https://github.com/tmax-cloud/install-EFK/tree/5.0#step-1-elasticsearch-%EC%84%A4%EC%B9%98)
 
 ## registry-operator 폐쇄망 구축 가이드
 
@@ -197,6 +197,7 @@ cd ${REG_OP_HOME}
     ```bash
     cp /etc/kubernetes/pki/hypercloud-root-ca.crt ./config/pki/ca.crt
     cp /etc/kubernetes/pki/hypercloud-root-ca.key ./config/pki/ca.key
+    sudo chmod 644 ./config/pki/ca.key
     ```
 
 * Hyperauth 인증서를 추가로 신뢰해야 하는 경우(Root CA와 다른 인증서로 Hyperauth를 설치한 경우)
@@ -247,7 +248,7 @@ sed -i 's/password: admin/password: '${PASSWORD}'/g' ${REG_OP_HOME}/config/manag
     ```bash
     cd ${REG_OP_HOME}
     sudo chmod 755 ./config/scripts/newCertSecret.sh install.sh
-    ./install.sh
+    sudo ./install.sh
     ```
 
 ### Step 5. 신뢰할 수 있는 인증서로 등록
