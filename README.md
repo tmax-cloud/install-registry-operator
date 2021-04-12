@@ -19,6 +19,9 @@
 1. Hyperauth 설치
 
     * [설치 가이드](https://github.com/tmax-cloud/install-hyperauth/tree/5.0)
+    * 설치시 hyperauth Deployment에 args 필드 내용 추가 필요
+        * spec.template.spec.containers.args: ["-Dkeycloak.profile.feature.docker=enabled", "-b", "0.0.0.0"]
+            * 설치가이드에서 `install-hyperauth/manifest/2.hyperauth_deployment.yaml` 파일 내 [주석](https://github.com/tmax-cloud/install-hyperauth/blob/5.0/manifest/2.hyperauth_deployment.yaml#L32) 해제
 
 1. Clair 설치
 
