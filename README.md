@@ -4,11 +4,11 @@
 
 * registry-operator
   * Github
-    * latest version source: [v0.3.1](https://github.com/tmax-cloud/registry-operator/tree/v0.3.1)
-    * latest version release: [v0.3.1](https://github.com/tmax-cloud/registry-operator/releases/tag/v0.3.1)
+    * latest version source: [v0.3.2](https://github.com/tmax-cloud/registry-operator/tree/v0.3.2)
+    * latest version release: [v0.3.2](https://github.com/tmax-cloud/registry-operator/releases/tag/v0.3.2)
   * Dockerhub(image)
-    * [tamxcloudck/registry-operator:v0.3.1](https://hub.docker.com/layers/tmaxcloudck/registry-operator/v0.3.1/images/sha256-a03591a1855a2a426dd436eb17744362a54793813deabe2557e295ec13cb13d6?context=explore)
-    * [tamxcloudck/registry-job-operator:v0.3.1](https://hub.docker.com/layers/tmaxcloudck/registry-job-operator/v0.3.1/images/sha256-fe214592dad01db46af2fd744637e796c02da249d0e48f7c9cb8c6a4ba496018?context=explore)
+    * [tamxcloudck/registry-operator:v0.3.2](https://hub.docker.com/layers/tmaxcloudck/registry-operator/v0.3.2/images/sha256-99c30ac81f274ada1b5743726f5b4b2c91122dd4c168ed2fe54dd2792ae378c5?context=explore)
+    * [tamxcloudck/registry-job-operator:v0.3.2](https://hub.docker.com/layers/tmaxcloudck/registry-job-operator/v0.3.2/images/sha256-e353f082e0b950417c82059cf04c22d6aba497304cb186e91b13b539dc18d89a?context=explore)
 
 ## Prerequisites
 
@@ -47,7 +47,7 @@
       ```bash
       mkdir -p ~/registry-operator-install
       INSTALL_HOME=~/registry-operator-install
-      REG_OP_VERSION=v0.3.1
+      REG_OP_VERSION=v0.3.2
       cd ${INSTALL_HOME}
       ```
 
@@ -101,7 +101,7 @@
       ```bash
       mkdir -p ~/registry-operator-install
       INSTALL_HOME=~/registry-operator-install
-      REG_OP_VERSION=v0.3.1
+      REG_OP_VERSION=v0.3.2
       REGISTRY={REGISTRY}   # ex: REGISTRY=192.168.6.100:5000
       cd ${INSTALL_HOME}
       ```
@@ -181,7 +181,7 @@
 폐쇄망 구축이 아닌 경우 아래의 명령어를 실행하여 설치 파일을 Github Repository로부터 받아 온다.
 
 ```bash
-REG_OP_VERSION=v0.3.1
+REG_OP_VERSION=v0.3.2
 REG_OP_DIR=registry-operator-${REG_OP_VERSION}
 mkdir ${REG_OP_DIR}
 wget -c https://github.com/tmax-cloud/registry-operator/archive/${REG_OP_VERSION}.tar.gz -O - |tar -xz -C ${REG_OP_DIR} --strip-components=1
