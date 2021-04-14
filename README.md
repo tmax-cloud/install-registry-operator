@@ -203,10 +203,6 @@ cd ${REG_OP_HOME}
     sudo chmod 644 ./config/pki/ca.crt ./config/pki/ca.key
     ```
 
-* Hyperauth 인증서를 추가로 신뢰해야 하는 경우(Root CA와 다른 인증서로 Hyperauth를 설치한 경우)
-
-    Hyperauth 인증서를 인증서 디렉토리(config/pki/)로 옮긴다. (단, 인증서의 이름을 `keycloak.crt`로 해야한다.)
-
 * Root CA가 없는 경우 아래의 명령어를 실행하여 인증서를 새로 생성한다.
 
     ```bash
@@ -215,6 +211,10 @@ cd ${REG_OP_HOME}
     ./config/scripts/newCertFile.sh
     cp ca.crt ca.key ./config/pki/
     ```
+
+* Root CA가 Hyperauth에서 쓰이는 Root CA와 다른 경우 Hyperauth 인증서를 추가로 신뢰 필요
+
+    Hyperauth 인증서를 인증서 디렉토리(config/pki/)로 옮긴다. (단, 인증서의 이름을 `keycloak.crt`로 해야한다.)
 
 ### Step 2. config 설정
 
