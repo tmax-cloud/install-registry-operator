@@ -71,7 +71,7 @@
       sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
 
       IMG=tmaxcloudck/notary_mysql
-      VER=0.6.2-rc1
+      VER=0.6.2-rc2
       sudo docker pull ${IMG}:${VER}
       sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
       
@@ -129,7 +129,7 @@
       sudo docker push ${REGISTRY}/${IMG}:${VER}
       
       IMG=tmaxcloudck/notary_mysql
-      VER=0.6.2-rc1
+      VER=0.6.2-rc2
       sudo docker load < ${IMG}_${VER}.tar
       sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
       sudo docker push ${REGISTRY}/${IMG}:${VER}
@@ -251,7 +251,7 @@ sed -i 's/password: admin/password: '${PASSWORD}'/g' ${REG_OP_HOME}/config/manag
     ```bash
     cd ${REG_OP_HOME}
     sudo chmod 755 ./config/scripts/newCertSecret.sh install.sh
-    sudo ./install.sh
+    ./install.sh
     ```
 
 ### Step 5. 신뢰할 수 있는 인증서로 등록
