@@ -1,183 +1,75 @@
 # registry-operator 설치 가이드
 
-## 구성 요소 및 버전
+## 구성요소
 
-* registry-operator
-  * Github
-    * latest version source: [v0.3.2](https://github.com/tmax-cloud/registry-operator/tree/v0.3.2)
-    * latest version release: [v0.3.2](https://github.com/tmax-cloud/registry-operator/releases/tag/v0.3.2)
-  * Dockerhub(image)
-    * [tamxcloudck/registry-operator:v0.3.2](https://hub.docker.com/layers/tmaxcloudck/registry-operator/v0.3.2/images/sha256-99c30ac81f274ada1b5743726f5b4b2c91122dd4c168ed2fe54dd2792ae378c5?context=explore)
-    * [tamxcloudck/registry-job-operator:v0.3.2](https://hub.docker.com/layers/tmaxcloudck/registry-job-operator/v0.3.2/images/sha256-e353f082e0b950417c82059cf04c22d6aba497304cb186e91b13b539dc18d89a?context=explore)
+* Git Repoistory
+    * https://github.com/tmax-cloud/registry-operator
+* Container Images
+    * [tmaxcloudck/registry-operator](https://hub.docker.com/r/tmaxcloudck/registry-operator) v0.3.4
+    * [tmaxcloudck/registry-job-operator](https://hub.docker.com/r/tmaxcloudck/registry-job-operator) v0.3.4
 
 ## Prerequisites
-
 1. Nginx Ingress Controller 설치
-
     * [설치 가이드](https://github.com/tmax-cloud/install-ingress/tree/5.0)
-
-1. Hyperauth 설치
-
+2. Hyperauth 설치
     * [설치 가이드](https://github.com/tmax-cloud/install-hyperauth/tree/5.0)
     * 설치시 hyperauth Deployment에 args 필드 내용 추가 필요
         * spec.template.spec.containers.args: ["-Dkeycloak.profile.feature.docker=enabled", "-b", "0.0.0.0"]
             * 설치가이드에서 [`install-hyperauth/manifest/2.hyperauth_deployment.yaml`](https://github.com/tmax-cloud/install-hyperauth/blob/5.0/manifest/2.hyperauth_deployment.yaml#L32) 파일 내용 확인
-
-1. Clair 설치
-
+3. Clair 설치
     * [설치 가이드](https://github.com/tmax-cloud/install-clair/tree/5.0)
 
 ## Related Add-ons
-
 1. image-validating-webhook
-
     * [Github](https://github.com/tmax-cloud/image-validating-webhook)
     * [설치 가이드](https://github.com/tmax-cloud/install-image-validating-webhook/tree/5.0)
 
 1. Elastic Search
-
     * [설치 가이드](https://github.com/tmax-cloud/install-EFK/tree/5.0#step-1-elasticsearch-%EC%84%A4%EC%B9%98)
 
 ## registry-operator 폐쇄망 구축 가이드
 
-1. 폐쇄망 Image Registry에서 사용할 Image 및 설치 파일 준비
+1. 폐쇄망에서 사용할 이미지 파일과 오퍼레이터 설치 파일 준비
+    
+    1.1 아래 이미지 목록을 파일로 저장 ([참조](https://github.com/tmax-cloud/install-registry/blob/5.0/podman.md#%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%91%B8%EC%8B%9C%ED%95%98%EA%B8%B0))
+      * registry:2.7.1                                         
+      * tmaxcloudck/notary_server:0.6.2-rc1                    
+      * tmaxcloudck/notary_signer0.6.2-rc1                     
+      * tmaxcloudck/notary_mysql:0.6.2-rc2                     
+      * tmaxcloudck/registry-operator:v0.3.4    
+      * tmaxcloudck/registry-job-operator:v0.3.4
 
-    * 작업 디렉토리 생성 및 환경 설정
-
+    1.2 설치 파일 다운로드
       ```bash
-      mkdir -p ~/registry-operator-install
-      INSTALL_HOME=~/registry-operator-install
-      REG_OP_VERSION=v0.3.4
-      cd ${INSTALL_HOME}
+      wget -O registry-operator.tar.gz https://github.com/tmax-cloud/registry-operator/archive/v0.3.4.tar.gz
       ```
 
-    * Image 저장
+2. 폐쇄망 환경으로 파일복사 및 설치 준비
 
-      ```bash
-      IMG=registry
-      VER=2.7.1
-      sudo docker pull ${IMG}:${VER}
-      sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
+    2.1 1.에서 준비한 registry-operator.tar.gz와 이미지 압축파일들을 복사
 
-      mkdir tmaxcloudck
-      IMG=tmaxcloudck/notary_server
-      VER=0.6.2-rc1
-      sudo docker pull ${IMG}:${VER}
-      sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
+    2.2 복사한 이미지들을 로컬에 로딩 후 대상 레지스트리에 푸시 ([참조](https://github.com/tmax-cloud/install-registry/blob/5.0/podman.md#%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%91%B8%EC%8B%9C%ED%95%98%EA%B8%B0))
 
-      IMG=tmaxcloudck/notary_signer
-      VER=0.6.2-rc1
-      sudo docker pull ${IMG}:${VER}
-      sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
-
-      IMG=tmaxcloudck/notary_mysql
-      VER=0.6.2-rc2
-      sudo docker pull ${IMG}:${VER}
-      sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
-      
-      IMG=tmaxcloudck/registry-operator
-      VER=${REG_OP_VERSION}
-      sudo docker pull ${IMG}:${VER}
-      sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
-      
-      IMG=tmaxcloudck/registry-job-operator
-      VER=${REG_OP_VERSION}
-      sudo docker pull ${IMG}:${VER}
-      sudo docker save ${IMG}:${VER} > ${IMG}_${VER}.tar
-      ```
-
-    * 설치 파일 저장
-
-      ```bash
-      wget -O registry-operator.tar.gz https://github.com/tmax-cloud/registry-operator/archive/${REG_OP_VERSION}.tar.gz
-      ```
-
-1. 폐쇄망 Registry에 필요한 Image Push 및 설치 파일 압축 해제 및 Image 주소 수정
-
-    * `위에서 저장한 tar 압축 파일들을 ${INSTALL_HOME} 디렉토리 내용 그대로` 폐쇄망 환경의 ${INSTALL_HOME} 디렉토리로 옮긴다.
-
-    * 아래의 명령어를 실행하여 폐쇄망 Image Registry 주소등 환경설정을 한다.
-
-      ```bash
-      mkdir -p ~/registry-operator-install
-      INSTALL_HOME=~/registry-operator-install
-      REG_OP_VERSION=v0.3.4
-      REGISTRY={REGISTRY}   # ex: REGISTRY=192.168.6.100:5000
-      cd ${INSTALL_HOME}
-      ```
-
-    * 아래의 명령어를 실행하여 Image를 Load하고 Push한다.
-
-      ```bash
-      cd ${INSTALL_HOME}
-      IMG=registry
-      VER=2.7.1
-      sudo docker load < ${IMG}_${VER}.tar
-      sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
-      sudo docker push ${REGISTRY}/${IMG}:${VER}
-      
-      IMG=tmaxcloudck/notary_server
-      VER=0.6.2-rc1
-      sudo docker load < ${IMG}_${VER}.tar
-      sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
-      sudo docker push ${REGISTRY}/${IMG}:${VER}
-      
-      IMG=tmaxcloudck/notary_signer
-      VER=0.6.2-rc1
-      sudo docker load < ${IMG}_${VER}.tar
-      sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
-      sudo docker push ${REGISTRY}/${IMG}:${VER}
-      
-      IMG=tmaxcloudck/notary_mysql
-      VER=0.6.2-rc2
-      sudo docker load < ${IMG}_${VER}.tar
-      sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
-      sudo docker push ${REGISTRY}/${IMG}:${VER}
-
-      IMG=tmaxcloudck/registry-operator
-      VER=${REG_OP_VERSION}
-      sudo docker load < ${IMG}_${VER}.tar
-      sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
-      sudo docker push ${REGISTRY}/${IMG}:${VER}
-
-      IMG=tmaxcloudck/registry-job-operator
-      VER=${REG_OP_VERSION}
-      sudo docker load < ${IMG}_${VER}.tar
-      sudo docker tag ${IMG}:${VER} ${REGISTRY}/${IMG}:${VER}
-      sudo docker push ${REGISTRY}/${IMG}:${VER}
-      ```
-
-      * 아래의 명령어를 실행하여 설치 파일 압축 해제 및 Image 주소 수정
-
-        ```bash
-        cd ${INSTALL_HOME}
-        mkdir registry-operator-${REG_OP_VERSION}
-        tar -xzf registry-operator.tar.gz -C registry-operator-${REG_OP_VERSION} --strip-components=1
-        REG_OP_HOME=${INSTALL_HOME}/registry-operator-${REG_OP_VERSION}
-
-        IMG=tmaxcloudck\\/registry-operator:${REG_OP_VERSION}
-        sed -i 's/'${IMG}'/'${REGISTRY}'\/'${IMG}'/g' ${REG_OP_HOME}/config/manager/manager.yaml
+    2.3 registry-operator.tar.gz 압축해제 및 manager.yaml, job_manager.yaml의 이미지 경로 수정
+    ```bash
+        tar -xzf registry-operator.tar.gz
+        cd registry-operator-0.3.4 
         
-        IMG=tmaxcloudck\\/registry-job-operator:${REG_OP_VERSION}
-        sed -i 's/'${IMG}'/'${REGISTRY}'\/'${IMG}'/g' ${REG_OP_HOME}/config/manager/job_manager.yaml
-        ```
+        # PodSpec의 image 경로를 올바르게(2.2에서 푸시한 이미지를 가리키도록) 수정
+        vi config/manager/manager.yaml 
+        # PodSpec의 image 경로를 올바르게(2.2에서 푸시한 이미지를 가리키도록) 수정
+        vi config/manager/job_manager.yaml
+    ```
 
 ## registry-operator 설치
-
 1. [Step 0. 설치 파일 준비](#Step-0-설치-파일-준비)
-
-1. [Step 1. 인증서 생성](#Step-1-인증서-생성)
-
-1. [Step 2. config 설정](#Step-2-config-설정)
-
-1. [Step 3. Hyperauth 계정 정보 입력](#Step-3-Hyperauth-계정-정보-입력)
-
-1. [Step 4. install script 실행](#Step-4-install-script-실행)
-
-1. [Step 5. 신뢰할 수 있는 인증서로 등록](#Step-5-신뢰할-수-있는-인증서로-등록)
+2. [Step 1. 인증서 생성](#Step-1-인증서-생성)
+3. [Step 2. config 설정](#Step-2-config-설정)
+4. [Step 3. Hyperauth 계정 정보 입력](#Step-3-Hyperauth-계정-정보-입력)
+5. [Step 4. install script 실행](#Step-4-install-script-실행)
+6. [Step 5. 신뢰할 수 있는 인증서로 등록](#Step-5-신뢰할-수-있는-인증서로-등록)
 
 ### Step 0. 설치 파일 준비
-
 폐쇄망 구축이 아닌 경우 아래의 명령어를 실행하여 설치 파일을 Github Repository로부터 받아 온다.
 
 ```bash
