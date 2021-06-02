@@ -5,8 +5,8 @@
 * Git Repoistory
     * https://github.com/tmax-cloud/registry-operator
 * Container Images
-    * [tmaxcloudck/registry-operator](https://hub.docker.com/r/tmaxcloudck/registry-operator) v0.3.4
-    * [tmaxcloudck/registry-job-operator](https://hub.docker.com/r/tmaxcloudck/registry-job-operator) v0.3.4
+    * [tmaxcloudck/registry-operator](https://hub.docker.com/r/tmaxcloudck/registry-operator) v0.3.5
+    * [tmaxcloudck/registry-job-operator](https://hub.docker.com/r/tmaxcloudck/registry-job-operator) v0.3.5
 
 ## Prerequisites
 1. Nginx Ingress Controller 설치
@@ -36,12 +36,12 @@
       * tmaxcloudck/notary_server:0.6.2-rc1                    
       * tmaxcloudck/notary_signer0.6.2-rc1                     
       * tmaxcloudck/notary_mysql:0.6.2-rc2                     
-      * tmaxcloudck/registry-operator:v0.3.4    
-      * tmaxcloudck/registry-job-operator:v0.3.4
+      * tmaxcloudck/registry-operator:v0.3.5    
+      * tmaxcloudck/registry-job-operator:v0.3.5
 
     1.2 설치 파일 다운로드
       ```bash
-      wget -O registry-operator.tar.gz https://github.com/tmax-cloud/registry-operator/archive/v0.3.4.tar.gz
+      wget -O registry-operator.tar.gz https://github.com/tmax-cloud/registry-operator/archive/v0.3.5.tar.gz
       ```
 
 2. 폐쇄망 환경으로 파일복사 및 설치 준비
@@ -73,7 +73,7 @@
 폐쇄망 구축이 아닌 경우 아래의 명령어를 실행하여 설치 파일을 Github Repository로부터 받아 온다.
 
 ```bash
-REG_OP_VERSION=v0.3.4
+REG_OP_VERSION=v0.3.5
 REG_OP_DIR=registry-operator-${REG_OP_VERSION}
 mkdir ${REG_OP_DIR}
 wget -c https://github.com/tmax-cloud/registry-operator/archive/${REG_OP_VERSION}.tar.gz -O - |tar -xz -C ${REG_OP_DIR} --strip-components=1
