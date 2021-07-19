@@ -4,8 +4,8 @@
 * Git Repoistory
     * https://github.com/tmax-cloud/registry-operator
 * Container Images
-    * [tmaxcloudck/registry-operator](https://hub.docker.com/r/tmaxcloudck/registry-operator) v0.3.5
-    * [tmaxcloudck/registry-job-operator](https://hub.docker.com/r/tmaxcloudck/registry-job-operator) v0.3.5
+    * [tmaxcloudck/registry-operator](https://hub.docker.com/r/tmaxcloudck/registry-operator) v0.4.0
+    * [tmaxcloudck/registry-job-operator](https://hub.docker.com/r/tmaxcloudck/registry-job-operator) v0.4.0
 
 ## Prerequisites
 1. Ingress Controller 설치
@@ -29,13 +29,13 @@
       * tmaxcloudck/notary_server:0.6.2-rc1                    
       * tmaxcloudck/notary_signer0.6.2-rc1                     
       * tmaxcloudck/notary_mysql:0.6.2-rc2                     
-      * tmaxcloudck/registry-operator:v0.3.5    
-      * tmaxcloudck/registry-job-operator:v0.3.5
+      * tmaxcloudck/registry-operator:v0.4.0    
+      * tmaxcloudck/registry-job-operator:v0.4.0
       * tmaxcloudck/keycloak:14.0.0
       * tmaxcloudck/postgres:10-alpine
     2. 설치 파일 다운로드
         ```bash
-        wget -O registry-operator.tar.gz https://github.com/tmax-cloud/registry-operator/archive/v0.3.5.tar.gz
+        wget -O registry-operator.tar.gz https://github.com/tmax-cloud/registry-operator/archive/v0.4.0.tar.gz
         ```
 
 2. 폐쇄망 환경으로 파일복사 및 설치 준비
@@ -63,7 +63,7 @@
 ### Step 0. 설치 파일 준비
 - 폐쇄망 구축이 아닌 경우 아래의 명령어를 실행하여 설치 파일을 Github Repository로부터 받아 온다.
     ```bash
-    VERSION=v0.3.5
+    VERSION=v0.4.0
     DIR_NAME=registry-operator-${VERSION}
     mkdir ${DIR_NAME}
     wget -c https://github.com/tmax-cloud/registry-operator/archive/${VERSION}.tar.gz -O - |tar -xz -C ${DIR_NAME} --strip-components=1
@@ -74,47 +74,23 @@
 ### Step 1. 인증서 생성
 * Root CA가 있는 경우
     `/etc/kubernetes/pki/` 디렉토리에 저장되어 있는 `hypercloud-root-ca.crt`과 `hypercloud-root-ca.key` 파일이 있으면 이 인증서를 Root CA 인증서로 사용하면 된다.
-    Root CA를 인증서 디렉토리(./config/pki/)로 옮긴다. (단, 인증서의 이름을 `ca.crt`와 `ca.key`로 해야한다.)
+    Root CA를  (단, 인증서의 이름을 `ca.crt`와 `ca.key`로 해야한다.)
     ```bash
-    sudo cp /etc/kubernetes/pki/hypercloud-root-ca.crt ./config/pki/ca.crt
-    sudo cp /etc/kubernetes/pki/hypercloud-root-ca.key ./config/pki/ca.key
-    sudo chmod 644 ./config/pki/ca.crt ./config/pki/ca.key
+    sudo cp /etc/kubernetes/pki/hypercloud-root-ca.crt ca.crt
+    sudo cp /etc/kubernetes/pki/hypercloud-root-ca.key ca.key
+    sudo chmod 644 ca.crt ca.key
     ```
-
-* Root CA가 없는 경우 아래의 명령어를 실행하여 인증서를 새로 생성한다.
-    ```bash
-    cd ${OPERATOR_HOME}
-    sudo chmod 755 ./config/scripts/newCertFile.sh
-    ./config/scripts/newCertFile.sh
-    cp ca.crt ca.key ./config/pki/
-    ```
-
-* Root CA가 Hyperauth에서 쓰이는 Root CA와 다른 경우 Hyperauth 인증서를 추가로 신뢰 필요
-    Hyperauth 인증서를 인증서 디렉토리(config/pki/)로 옮긴다. (단, 인증서의 이름을 `keycloak.crt`로 해야한다.)
 
 ### Step 2. token service 인그레스 설정
 1. ingress IP 확인
-2. 다음 파일 목록의 __DOMAIN__을 부분을 <ingress-IP.nip>.io로 수정 
-   - config/token/trust/cert.conf 
-   - config/token/ingress.yaml
-   - config/manager/manager_config.yaml
-3. 인증서 생성
     ```bash
-    cd config/token
-    make trust
-    # ---
-    Country Name (2 letter code) [KR]: <enter>
-    Organization Name (eg, company) [TmaxCloud]: <enter>
-    Organizational Unit Name (eg, section) [DevOps]: <enter>
-    Common Name (eg, hostname) [token-service]: <enter>
+    kubectl get svc -n nginx-ingress-shared 
     ```
-
 ### Step 3. config 설정
 `config/manager/manager_config.yaml` 파일에 환경변수를 설정할 수 있다.
 환경변수에 대한 설명은 docs/envs.md 를 보거나 [Github](https://github.com/tmax-cloud/registry-operator/blob/master/docs/envs.md)를 참고하여 설정한다.(Github의 경우 tag를 해당 버전으로 변경해야한다.)
 
 * manager_config.yaml 필수 체크
-  * token.url: Step 2에서 설정한 token-service의 URL (ex: https://token-service.172.22.11.10.nip.io)
   * scanning.scanner.url: Clair URL
   * scanning.report.url: Elasticsearch URL
   * image.registry: (`폐쇄망의 경우 필수`) 폐쇄망 레지스트리 주소 설정
@@ -135,8 +111,8 @@ sed -i 's/password: admin/password: '${PASSWORD}'/g' ${OPERATOR_HOME}/config/man
 * 아래의 명령어를 실행하여 registry-operator를 설치합니다.
     ```bash
     cd ${OPERATOR_HOME}
-    sudo chmod 755 ./config/scripts/newCertSecret.sh install.sh
-    ./install.sh
+    chmod +x ./install.sh
+    sudo ./install.sh <ingress-IP> ca.crt ca.key
     ```
 
 ### Step 6. 신뢰할 수 있는 인증서로 등록
